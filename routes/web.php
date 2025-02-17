@@ -11,7 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $charts = Chart::all();
+    $charts = Chart::where('user_id', auth()->id())->get();
     return view('dashboard', ['charts'=>$charts]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

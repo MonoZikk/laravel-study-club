@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('charts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->integer('kode_barang')->unique();
             $table->string('nama_barang');
             $table->integer('qty');
