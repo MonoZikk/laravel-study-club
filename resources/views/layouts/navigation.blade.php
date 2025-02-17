@@ -12,10 +12,10 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Home</a>
+                    <a class="{{request()->routeIs('dashboard') ? 'active text-decoration-underline' : ''}} nav-link" aria-current="page" href="{{ route('dashboard') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('charts.index') }}">Chart</a>
+                    <a class="{{request()->routeIs('charts.index', 'charts.edit', "charts.create") ? 'active text-decoration-underline' : ''}} nav-link" href="{{ route('charts.index') }}">Chart</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
