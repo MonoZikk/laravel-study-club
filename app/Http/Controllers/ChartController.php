@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chart;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -29,6 +30,13 @@ class ChartController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'kode_barang' => 'required|integer|min:1',
+            'nama_barang' => 'required|string|max:255',
+            'qty' => 'required|integer|min:1',
+            'harga_barang' => 'required|numeric|min:0'
+        ]);
+
         Chart::create([
             'kode_barang'=>$request->kode_barang,
             'user_id'=>auth()->id(),
@@ -36,7 +44,6 @@ class ChartController extends Controller
             'qty'=>$request->qty,
             'harga_barang'=>$request->harga_barang,
             'total_harga_barang'=>$request->qty* $request->harga_barang,
-            
         ]);
 
         return redirect()->route('charts.index');
@@ -76,6 +83,13 @@ class ChartController extends Controller
         if(!$uservalidation){
             return abort(403, 'Anda tidak memiliki izin untuk mengedit barang ini.');
         }
+
+        $request->validate([
+            'kode_barang' => 'required|integer|min:1',
+            'nama_barang' => 'required|string|max:255',
+            'qty' => 'required|integer|min:1',
+            'harga_barang' => 'required|numeric|min:0'
+        ]);
 
         Chart::find($id)->update([
             'kode_barang'=>$request->kode_barang,
