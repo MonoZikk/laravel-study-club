@@ -7,7 +7,7 @@
 
     <div class="container mt-5">
         <h1>Edit Data</h1>
-        <form action="{{ route('charts.update', $chart->id) }}" method="POST">
+        <form action="{{ route('charts.update', $chart->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="mb-3">
@@ -41,6 +41,14 @@
                     <div class="text-danger fst-italic">Harga barang harus diisi!</div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="foto_barang" class="form-label">Foto Barang</label>
+                <input type="file" class="form-control" id="foto_barang" name="foto_barang" value="{{old('foto_barang')}}">
+                @error('foto_barang')
+                    <div class="text-danger fst-italic">Foto barang harus diisi!</div>
+                @enderror
+            </div>
+            
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

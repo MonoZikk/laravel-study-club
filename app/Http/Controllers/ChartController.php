@@ -34,16 +34,24 @@ class ChartController extends Controller
             'kode_barang' => 'required|integer|min:1',
             'nama_barang' => 'required|string|max:255',
             'qty' => 'required|integer|min:1',
-            'harga_barang' => 'required|numeric|min:0'
+            'harga_barang' => 'required|numeric|min:0',
+            'foto_barang' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        
+        $fotoPath = null;
+        if ($request->hasFile('foto_barang')) {
+            $fotoPath = $request->file('foto_barang')->store('uploads', 'public');
+        }
+        
 
         Chart::create([
-            'kode_barang'=>$request->kode_barang,
-            'user_id'=>auth()->id(),
-            'nama_barang'=>$request->nama_barang,
-            'qty'=>$request->qty,
-            'harga_barang'=>$request->harga_barang,
-            'total_harga_barang'=>$request->qty* $request->harga_barang,
+            'kode_barang' => $request->kode_barang,
+            'user_id' => auth()->id(),
+            'nama_barang' => $request->nama_barang,
+            'qty' => $request->qty,
+            'harga_barang' => $request->harga_barang,
+            'total_harga_barang' => $request->qty * $request->harga_barang,
+            'foto_barang' => $fotoPath,
         ]);
 
         return redirect()->route('charts.index');
@@ -64,12 +72,12 @@ class ChartController extends Controller
     {
         $uservalidation = Chart::where('id', $id)->where('user_id', auth()->id())->first();
 
-        if(!$uservalidation){
+        if (!$uservalidation) {
             return abort(403, 'Anda tidak memiliki izin untuk mengedit barang ini.');
         }
 
         $chart = Chart::find($id);
-        return view('charts.edit', ['chart'=>$chart]);
+        return view('charts.edit', ['chart' => $chart]);
     }
 
     /**
@@ -80,7 +88,7 @@ class ChartController extends Controller
 
         $uservalidation = Chart::where('id', $id)->where('user_id', auth()->id())->first();
 
-        if(!$uservalidation){
+        if (!$uservalidation) {
             return abort(403, 'Anda tidak memiliki izin untuk mengedit barang ini.');
         }
 
@@ -88,15 +96,22 @@ class ChartController extends Controller
             'kode_barang' => 'required|integer|min:1',
             'nama_barang' => 'required|string|max:255',
             'qty' => 'required|integer|min:1',
-            'harga_barang' => 'required|numeric|min:0'
+            'harga_barang' => 'required|numeric|min:0',
+            'foto_barang' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $fotoPath = null;
+        if ($request->hasFile('foto_barang')) {
+            $fotoPath = $request->file('foto_barang')->store('uploads', 'public');
+        }
+
         Chart::find($id)->update([
-            'kode_barang'=>$request->kode_barang,
-            'nama_barang'=>$request->nama_barang,
-            'qty'=>$request->qty,
-            'harga_barang'=>$request->harga_barang,
-            'total_harga_barang'=>$request->qty* $request->harga_barang
+            'kode_barang' => $request->kode_barang,
+            'nama_barang' => $request->nama_barang,
+            'qty' => $request->qty,
+            'harga_barang' => $request->harga_barang,
+            'total_harga_barang' => $request->qty * $request->harga_barang,
+            'foto_barang' => $fotoPath,
         ]);
 
         return redirect()->route('charts.index');
@@ -110,7 +125,7 @@ class ChartController extends Controller
 
         $uservalidation = Chart::where('id', $id)->where('user_id', auth()->id())->first();
 
-        if(!$uservalidation){
+        if (!$uservalidation) {
             return abort(403, 'Anda tidak memiliki izin untuk menghapus barang ini.');
         }
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('qty');
             $table->integer('harga_barang');
             $table->integer('total_harga_barang');
+            $table->string('foto_barang');
             $table->timestamps();
         });
     }

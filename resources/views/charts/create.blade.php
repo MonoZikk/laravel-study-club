@@ -7,11 +7,11 @@
 
     <div class="container mt-5">
         <h1>Tambah Data</h1>
-        <form action="{{route('charts.store')}}" method="POST">
+        <form action="{{route('charts.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="kode_barang" class="form-label">Kode Barang</label>
-                <input type="text" class="form-control" id="kode_barang" name="kode_barang" value="{{old('kode_barang')}}">
+                <input type="number" class="form-control" id="kode_barang" name="kode_barang" value="{{old('kode_barang')}}">
                 @error('kode_barang')
                     <div class="text-danger fst-italic">Kode barang harus diisi!</div>
                 @enderror
@@ -35,6 +35,13 @@
                 <input type="number" class="form-control" id="harga_barang" name="harga_barang" value="{{old('harga_barang')}}">
                 @error('harga_barang')
                     <div class="text-danger fst-italic">Harga barang harus diisi!</div>
+                @enderror
+            </div>
+            <div class="mb-3">
+                <label for="foto_barang" class="form-label">Foto Barang</label>
+                <input type="file" class="form-control" id="foto_barang" name="foto_barang" value="{{old('foto_barang')}}">
+                @error('foto_barang')
+                    <div class="text-danger fst-italic">Foto barang harus diisi!</div>
                 @enderror
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
