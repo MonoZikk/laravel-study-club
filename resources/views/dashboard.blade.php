@@ -24,6 +24,7 @@
                 <th>Qty</th>
                 <th>Harga Barang</th>
                 <th>Total Harga Barang</th>
+                <th>Foto Barang</th>
             </tr>
         </thead>
         <tbody>
@@ -34,7 +35,15 @@
                     <td>{{ $chart->qty }}</td>
                     <td>{{ $chart->harga_barang }}</td>
                     <td>{{ $chart->total_harga_barang }}</td>
-                    
+                    <td>
+                        @if ($chart->foto_barang)
+                        
+                        <img src="{{asset("storage/" . $chart->foto_barang)}}" alt="" class="aspect-ratio 1/1 rounded-circle img-fluid" 
+                        style="width: 100px; height:100px;object-fit: cover; border: 2px solid white;box-shadow: -1px -1px 52px -22px rgba(82,117,188,0.75);
+                                -webkit-box-shadow: -1px -1px 52px -22px rgba(82,117,188,0.75);
+                                -moz-box-shadow: -1px -1px 52px -22px rgba(82,117,188,0.75);">
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
