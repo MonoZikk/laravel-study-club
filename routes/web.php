@@ -15,6 +15,12 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['charts'=>$charts]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::get('/admin', function () {
+    $charts = Chart::where('user_id', auth()->id())->get();
+    return view('admin.index', ['charts'=>$charts]);
+})->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
