@@ -25,6 +25,10 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
+                        @if (auth()->user()->role == 'admin')
+                            
+                        <li><a class="dropdown-item" href="{{route('admin.index')}}">Fitur Admin</a></li>
+                        @endif
                         <li>
                             <form action="{{route('logout')}}" method="POST">
                                 @csrf

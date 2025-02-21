@@ -5,20 +5,27 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Chart;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    $charts = Chart::where('user_id', auth()->id())->get();
+    $user = Auth::user();
+    $charts = collect();
+    
+    if($user->role == 'admin'){
+        $charts = Chart::all(); 
+    } else {
+        $charts = Chart::where('user_id', auth()->id())->get();
+    }
     return view('dashboard', ['charts'=>$charts]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/admin', function () {
-    $charts = Chart::where('user_id', auth()->id())->get();
-    return view('admin.index', ['charts'=>$charts]);
+    return view('admin.index');
 })->middleware(['auth', 'verified', 'role:admin'])->name('admin.index');
 
 Route::middleware('auth')->group(function () {

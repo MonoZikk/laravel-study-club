@@ -13,7 +13,12 @@ class ChartController extends Controller
      */
     public function index()
     {
-        $charts = Chart::where('user_id', auth()->id())->get();
+        $charts = collect();
+        if(auth()->user()->role == 'admin'){
+            $charts = Chart::all();    
+        } else {
+            $charts = Chart::where('user_id', auth()->id())->get();
+        }
         return view('charts.index', ['charts' => $charts]);
     }
 
